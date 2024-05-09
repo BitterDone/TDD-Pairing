@@ -30,9 +30,20 @@ public class GreetingControllerTest {
 
 //  Requires SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
     @Test
-    void greetingShouldReturnDefaultMessage() {
+    void helloShouldReturnDefaultMessage() {
         assertThat(this.restTemplate.getForObject("http://localhost:8080/hello",
                 String.class)).isEqualTo("hello");
     }
 
+    @Test
+    void greetingShouldReturnDefaultMessage() {
+        assertThat(this.restTemplate.getForObject("http://localhost:8080/greeting",
+                Greeting.class).getContent()).isEqualTo("Hello, World!");
+    }
+
+    @Test
+    void greetingShouldReturnCustomMessage() {
+        assertThat(this.restTemplate.getForObject("http://localhost:8080/greeting?name=Person",
+                Greeting.class).getContent()).isEqualTo("Hello, Person!");
+    }
 }
