@@ -8,6 +8,8 @@ public class TddPairingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TddPairingApplication.class, args);
+		Utilities u = new Utilities();
+		System.out.println(u.hello());
 	}
 
 }
