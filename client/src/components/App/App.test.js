@@ -7,4 +7,10 @@ describe('test-name', () => {
     const linkElement = screen.getByText(/learn react/i);
     expect(linkElement).toBeInTheDocument();
   });
+  
+  test('renders data from the backend', () => {
+    render(<App />);
+    const linkElement = screen.getByText(/hello/i);
+    expect(linkElement).toBeInTheDocument();
+  });
 });
