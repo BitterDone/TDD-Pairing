@@ -29,5 +29,15 @@ describe('App component', () => {
       expect(screen.getByText(/Learn React 2/i)).toBeInTheDocument()
       expect(screen.getByText(/Displaying: hello/i)).toBeInTheDocument()
     })
+    
+    test('renders error from backend failure', async () => {
+      const mockPromiseReject = new Promise((resolve, reject) => reject('error'))
+      jest.spyOn(global, 'fetch').mockResolvedValue(mockPromiseReject)
+
+      render(<App />)
+      await waitFor(() => {
+        expect(screen.getByText(/Error loading data/i)).toBeInTheDocument()
+      })
+    })
   })
 })
