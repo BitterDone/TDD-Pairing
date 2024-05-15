@@ -29,11 +29,7 @@
       }
     },
     "collectCoverageFrom": [
-      "!**/index.js",
-      "!**/reportWebVitals.js",
-      "!**/logo.svg",
-      "!**/node_modules/**",
-      "!**/vendor/**"
+      "src/*components/**"
     ]
   },
   "eslintConfig": {
