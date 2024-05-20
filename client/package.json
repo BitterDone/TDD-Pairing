@@ -20,7 +20,7 @@
     "eject": "react-scripts eject"
   },
   "standard": {
-    "globals": [ "describe", "test",  "expect",  "beforeAll", "jest" ]
+    "globals": [ "describe", "test",  "expect",  "beforeAll", "afterAll", "jest" ]
   },
   "jest": {
     "coverageThreshold": {

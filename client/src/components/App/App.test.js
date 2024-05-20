@@ -46,7 +46,7 @@ describe('App component', () => {
 
     test('renders error from backend failure', async () => {
       // global.fetch = jest.fn(() => Promise.reject({ error: 'error' }))
-      function mockFetch () { return Promise.reject({ error: 'error' }) }
+      function mockFetch () { return Promise.reject(new Error('error')) }
       jest.spyOn(global, 'fetch').mockImplementation(mockFetch)
 
       render(<App />)
