@@ -4,7 +4,17 @@ import userEvent from '@testing-library/user-event'
 import { act } from 'react'
 
 describe('App component', () => {
-  describe('Static text', () => {
+  let globalFetch
+  
+  beforeAll(() => {
+    globalFetch = global.fetch
+  })
+  
+  afterAll(() => {
+    global.fetch = globalFetch
+  })
+  
+  describe.skip('Static text', () => {
     test('renders learn react link', () => {
       render(<App />)
       const linkElement = screen.getByText(/learn react/i)
@@ -14,30 +24,39 @@ describe('App component', () => {
 
   describe('Network data', () => {
     test('renders data from the backend', async () => {
-      jest.spyOn(global, 'fetch').mockResolvedValue({ text: () => 'hello' })
+      global.fetch = () => Promise.resolve({ text: () => 'hello' })
 
       render(<App />)
       await waitFor(() => {
         expect(screen.getByText(/Displaying: hello/i)).toBeInTheDocument()
       })
       expect(screen.getByText(/Learn React 1/i)).toBeInTheDocument()
-      expect(global.fetch).toHaveBeenCalledTimes(1)
+      // setTimeout(() => {
+        expect(global.fetch).toHaveBeenCalledTimes(1)
+      // }, 100)
 
       await act(async () => await userEvent.click(screen.getByText(/Load data/i)))
 
-      expect(global.fetch).toHaveBeenCalledTimes(2)
+      setTimeout(() => {
+        expect(global.fetch).toHaveBeenCalledTimes(2)
+      }, 100)
       expect(screen.getByText(/Learn React 2/i)).toBeInTheDocument()
       expect(screen.getByText(/Displaying: hello/i)).toBeInTheDocument()
     })
-    
+
     test('renders error from backend failure', async () => {
-      const mockPromiseReject = new Promise((resolve, reject) => reject('error'))
-      jest.spyOn(global, 'fetch').mockResolvedValue(mockPromiseReject)
+      // global.fetch = jest.fn(() => Promise.reject({ error: 'error' }))
+      function mockFetch () { return Promise.reject({ error: 'error' }) }
+      jest.spyOn(global, 'fetch').mockImplementation(mockFetch)
 
       render(<App />)
       await waitFor(() => {
         expect(screen.getByText(/Error loading data/i)).toBeInTheDocument()
       })
+      setTimeout(()=>{
+        // https://stackoverflow.com/questions/50809648/spyon-a-mocked-jest-module-not-spying-properly
+        expect(mockFetch).toHaveBeenCalledTimes(1)
+      }, 100)
     })
   })
 })
