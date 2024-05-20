@@ -5,15 +5,15 @@ import { act } from 'react'
 
 describe('App component', () => {
   let globalFetch
-  
+
   beforeAll(() => {
     globalFetch = global.fetch
   })
-  
+
   afterAll(() => {
     global.fetch = globalFetch
   })
-  
+
   describe.skip('Static text', () => {
     test('renders learn react link', () => {
       render(<App />)
@@ -32,7 +32,7 @@ describe('App component', () => {
       })
       expect(screen.getByText(/Learn React 1/i)).toBeInTheDocument()
       // setTimeout(() => {
-        expect(global.fetch).toHaveBeenCalledTimes(1)
+      expect(global.fetch).toHaveBeenCalledTimes(1)
       // }, 100)
 
       await act(async () => await userEvent.click(screen.getByText(/Load data/i)))
@@ -53,7 +53,7 @@ describe('App component', () => {
       await waitFor(() => {
         expect(screen.getByText(/Error loading data/i)).toBeInTheDocument()
       })
-      setTimeout(()=>{
+      setTimeout(() => {
         // https://stackoverflow.com/questions/50809648/spyon-a-mocked-jest-module-not-spying-properly
         expect(mockFetch).toHaveBeenCalledTimes(1)
       }, 100)

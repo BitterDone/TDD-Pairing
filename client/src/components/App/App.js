@@ -17,22 +17,20 @@ function App () {
   }, [])
 
   useEffect(() => {
-  if (loading === true) {
-    setDisplayValue('loading')
-    return
-  }
-  
-  if (result !== undefined) {
-    setDisplayValue(result)
-    setCounter(counter + 1)
-    return
-  }
-  
-  if (error !== undefined) {
-    setDisplayValue('Error loading data' + error)
-    return
-  }
+    if (loading === true) {
+      setDisplayValue('loading')
+      return
+    }
 
+    if (result !== undefined) {
+      setDisplayValue(result)
+      setCounter(counter + 1)
+      return
+    }
+
+    if (error !== undefined) {
+      setDisplayValue('Error loading data' + error)
+    }
   }, [loading, result, error])
 
   return (
