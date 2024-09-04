@@ -1,0 +1,18 @@
+services:
+  tdd-frontend:
+    image: "tdd-pairing/tdd-frontend:0.0.1"
+    container_name: tdd-frontend
+    ports:
+      - "3000:3000"
+    links:
+      - tdd-backend
+
+  tdd-backend:
+    image: "tdd-pairing/tdd-backend:0.0.1"
+    build:
+      context: .
+    container_name: tdd-backend
+    environment:
+      - SPRING.PROFILES.ACTIVE=default
+    ports:
+      - "8080:8080"
